@@ -11,8 +11,8 @@ import java.util.List;
 
 
 public class Player extends Actor {
-    String name="player";
-    private  static final List<String> NAMES = List.of("piotr", "adrian", "galyna", "karolina");
+    String name = "player";
+    private static final List<String> NAMES = List.of("piotr", "adrian", "galyna", "karolina");
 
     ArrayList<Item> items = new ArrayList<>();
 
@@ -27,20 +27,21 @@ public class Player extends Actor {
         GameMap map = cell.getGameMap();
         if (!cell.hasNeighbor(dx, dy)) return;
         Cell neighbor = cell.getNeighbor(dx, dy);
-        //check we have key if yes open door
-        Door.tryOpen(dx, dy, map, items);
-        Stairs.goDown(dx, dy, cell);
+        neighbor.tryToEnter(this);
+
         WinObject.checkWin(dx, dy, cell);
         //check object is in collidlist
-        if (map.getObstacles().contains(neighbor.getType())&& !NAMES.contains(name)) {
+        if (map.getObstacles().contains(neighbor.getType()) && !NAMES.contains(name)) {
             return;
         }
         //check is enemies
         if (neighbor.getActor() != null) {
             Actor enemy = neighbor.getActor();
             fight(enemy);
-        }else
-            changeCell(dx, dy);//move
+        } else changeCell(dx, dy);
+        // players move triggers mobs move
+        map.getMobs().forEach(Actor::move);
+
     }
 
 
