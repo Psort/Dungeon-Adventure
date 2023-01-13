@@ -33,7 +33,7 @@ import java.util.List;
 public class Main extends Application {
     MapLoader mapFromFileLoader = new MapLoader();
     List<GameMap> maps = new ArrayList<>();
-    List<String> nameMaps = Arrays.asList("/map.txt","/map2.txt","/map3.txt","/win.txt");
+    List<String> levels = Arrays.asList("/map.txt","/map2.txt","/map3.txt","/win.txt");
 
     int level;
     GameMap map;
@@ -63,7 +63,7 @@ public class Main extends Application {
 
 
     public Main() {
-        maps.add(mapFromFileLoader.loadMap(this,nameMaps.get(level)));
+        maps.add(mapFromFileLoader.loadMap(this, levels.get(level)));
         this.map =maps.get(level);
     }
     public static void main(String[] args) {
@@ -174,7 +174,7 @@ public class Main extends Application {
             try {
                 maps = new ArrayList<>();
                 level = 0;
-                maps.add(mapFromFileLoader.loadMap(this,nameMaps.get(level)));
+                maps.add(mapFromFileLoader.loadMap(this, levels.get(level)));
                 map = maps.get(level);
                 mainMenu(primaryStage);
             } catch (FileNotFoundException fileNotFoundException) {
@@ -366,7 +366,7 @@ public class Main extends Application {
     public void nextLevel(){
         this.level ++;
         if(level >=maps.size()){
-            GameMap newmap = mapFromFileLoader.loadMap(this, nameMaps.get(level));
+            GameMap newmap = mapFromFileLoader.loadMap(this, levels.get(level));
             addMap(newmap);
         }
         this.map =maps.get(level);
