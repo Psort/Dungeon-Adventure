@@ -28,7 +28,6 @@ public class Player extends Actor {
         if (!cell.hasNeighbor(dx, dy)) return;
         Cell neighbor = cell.getNeighbor(dx, dy);
         neighbor.tryToEnter(this);
-
         WinObject.checkWin(dx, dy, cell);
         //check object is in collidlist
         if (map.getObstacles().contains(neighbor.getType()) && !NAMES.contains(name)) {
