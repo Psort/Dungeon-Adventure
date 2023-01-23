@@ -1,10 +1,8 @@
 package com.codecool.dungeoncrawl.logic.map;
 
 import com.codecool.dungeoncrawl.logic.Drawable;
-import com.codecool.dungeoncrawl.logic.Objects.Door;
 import com.codecool.dungeoncrawl.logic.Objects.Entrance;
 import com.codecool.dungeoncrawl.logic.Objects.NoEntry;
-import com.codecool.dungeoncrawl.logic.Objects.Stairs;
 import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.items.Item;
@@ -40,6 +38,7 @@ public class Cell implements Drawable {
     public void setActor(Actor actor) {
         this.actor = actor;
     }
+
     public Item getItem() {
         return item;
     }
@@ -47,6 +46,7 @@ public class Cell implements Drawable {
     public boolean isItemOnCell() {
         return getItem() != null;
     }
+
     public void setItem(Item item) {
         this.item = item;
     }
@@ -85,5 +85,13 @@ public class Cell implements Drawable {
 
     public void tryToEnter(Player player) {
         entrance.tryToEnter(this, player.getInventory());
+    }
+
+    public boolean canPlayerMoveOn(boolean canWalkThroughWalls) {
+        return (canWalkThroughWalls || !gameMap.getObstacles().contains(type)) && actor == null;
+    }
+
+    public boolean containsEnemyThatCanBeAttacked() {
+        return actor != null && !gameMap.getObstacles().contains(type);
     }
 }
